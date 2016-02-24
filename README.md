@@ -6,6 +6,6 @@ Sketches.
 
 Consume values from input channel. Broadcast values from input channel.
 
-## 02. [Tap](./02.tap.md)
+## [02. Tap](./02.tap.md)
 
 Produce side effects from input channel values without consuming them.
