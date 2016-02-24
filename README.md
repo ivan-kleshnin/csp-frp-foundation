@@ -20,6 +20,10 @@ Freeze task for defined time.
 
 Generate sequential values over time.
 
+### [05. merge](./05.merge.md)
+
+Merge values from input channels into output channel.
+
 ## Notes
 
 Every time your project is promise-based (async-await is) – don't forget to add something like
