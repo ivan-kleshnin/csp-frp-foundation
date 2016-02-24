@@ -2,6 +2,18 @@
 
 Sketches.
 
+## Notes
+
+Every time your project is promise-based (async-await is) – don't forget to add something like
+
+```js
+process.on("unhandledRejection", function (reason, p) {
+  throw reason;
+});
+```
+
+into app root file. Blame NodeJS devs for that.
+
 ## [01. consume / broadcast](./01.consume.broadcast.md)
 
 Consume values from input channel. Broadcast values from input channel.
