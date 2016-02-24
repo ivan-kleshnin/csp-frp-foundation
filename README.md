@@ -7,6 +7,7 @@ Sketches.
 Every time your project is promise-based (async-await is) – don't forget to add something like
 
 ```js
+// backend only: need condition for isomorphic app
 process.on("unhandledRejection", function (reason, p) {
   throw reason;
 });
