@@ -24,9 +24,13 @@ Generate sequential values over time.
 
 Merge values from input channels into output channel.
 
-### [06. delay](./05.delay.md)
+### [06. delay](./06.delay.md)
 
 Delay every value from input channel for defined time.
+
+### [07. lift](./07.lift.md)
+
+Apply function over input streams. First call will be delayed until all input channels yield.
 
 ## Notes
 
