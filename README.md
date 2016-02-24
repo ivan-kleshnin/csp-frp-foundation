@@ -24,6 +24,10 @@ Generate sequential values over time.
 
 Merge values from input channels into output channel.
 
+### [06. delay](./05.delay.md)
+
+Delay every value from input channel for defined time.
+
 ## Notes
 
 Every time your project is promise-based (async-await is) – don't forget to add something like
