@@ -16,7 +16,7 @@ Produce side effects from input channel without values being consumed.
 
 Freeze task for defined time.
 
-### [04. drawEvery / callEvery](./04.drawEvery.callEvery.md)
+### [04. drawEvery / callEvery / repeatEvery](./04.drawEvery.callEvery.repeatEvery.md)
 
 Generate sequential values over time.
 
