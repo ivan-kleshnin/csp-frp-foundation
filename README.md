@@ -12,4 +12,4 @@ Produce side effects from input channel values without consuming them.
 
 ## [03. Sleep](./03.sleep.md)
 
-Sleep task for defined time.
+Freeze task for defined time.
