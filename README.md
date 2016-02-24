@@ -14,7 +14,7 @@ Produce side effects from input channel without values being consumed.
 
 ### [03. sleep](./03.sleep.md)
 
-Freeze task for defined time.
+Pause task for defined time.
 
 ### [04. drawEvery / callEvery / repeatEvery](./04.drawEvery.callEvery.repeatEvery.md)
 
