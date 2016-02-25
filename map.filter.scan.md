@@ -1,0 +1,148 @@
+# map / filter / scan
+
+Classic functional triad. Map is a [lift](./lift.md) for unary function and single input stream.
+Filter is an opposite of reject. Scan is a reduce which yields every intermediate value.
+
+## map
+
+### Desired behavior
+
+```js
+let state = 0;
+let chan1 = callEvery(100, () => state++);
+let chanM = map((x) => 2 * x, chan1);
+consume(::console.log, chanM);
+```
+
+```
+0
+2
+4
+6
+^C
+```
+
+### Analogy
+
+[`Rx.map`](http://reactivex.io/documentation/operators/map.html) [`Kefir.map`](https://rpominov.github.io/kefir/#map)
+
+### API
+
+```js
+map :: (a -> b) -> Channel a -> Channel b
+```
+
+### Implementation
+
+```js
+// in terms of lift
+let map = curry((mapFn, inChan) => {
+  return lift(mapFn, [inChan]);
+});
+```
+
+## Filter
+
+### Desired behavior
+
+```js
+let state = 0;
+let chan1 = callEvery(100, () => state++);
+let chanF = filter((x) => x % 2, chan1);
+consume(::console.log, chanF);
+```
+
+```
+1
+3
+5
+7
+^C
+```
+
+### Analogy
+
+[`Rx.filter`](http://reactivex.io/documentation/operators/filter.html) [`Kefir.filter`](https://rpominov.github.io/kefir/#filter)
+
+### API
+
+```js
+filter :: (a -> Boolean) -> Channel a -> Channel a
+```
+
+### Implementation
+
+```js
+let filter = curry((filterFn, inChan) => {
+  let outChan = chan();
+  go(async () => {
+    while (true) {
+      let x = await take(inChan);
+      if (x === CLOSED) {
+        break;
+      } else {
+        if (filterFn(x)) {
+          if (!await put(outChan, x)) {
+            break;
+          }
+        }
+      }
+    }
+    close(outChan);
+  });
+  return outChan;
+});
+```
+
+## Scan
+
+### Desired behavior
+
+```js
+let chan1 = repeatEvery(100, 1);
+let chanS = scan((x) => x + 1, 0, chan1);
+consume(::console.log, chanS);
+```
+
+```
+0
+1
+2
+3
+4
+```
+
+### Analogy
+
+[`Rx.scan`](http://reactivex.io/documentation/operators/scan.html) [`Kefir.scan`](https://rpominov.github.io/kefir/#scan)
+
+### API
+
+```js
+scan :: (a -> b -> a) -> a -> Channel b -> Channel a
+```
+
+### Implementation
+
+```js
+let scan = curry((scanFn, memo, inChan) => {
+  let outChan = chan();
+  let state = memo;
+  go(async () => {
+    await put(outChan, state);
+    while (true) {
+      let x = await take(inChan);
+      if (x === CLOSED) {
+        break;
+      } else {
+        state = scanFn(state, x);
+        if (!await put(outChan, state)) {
+          break;
+        }
+      }
+    }
+    close(outChan);
+  });
+  return outChan;
+});
+```
