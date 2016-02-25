@@ -32,6 +32,10 @@ Delay every value from input channel for defined time.
 
 Apply function over input streams. First call will be delayed until all input channels yield.
 
+### [08. map / filter / scan](./07.map.filter.scan.md)
+
+Classic functional triad.
+
 ## Notes
 
 Every time your project is promise-based (async-await is) – don't forget to add something like
